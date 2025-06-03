@@ -16,6 +16,8 @@ def main():
     obfuscated_command = parts[0] + "\\"
     current_path = parts[0] + "\\"
 
+    options = []
+
     for index in range(1, len(parts)):
         part = parts[index]
         best_obfuscation = None
@@ -27,6 +29,8 @@ def main():
             matches = glob.glob(test_path)
             if len(matches) == 1:
                 best_obfuscation = wildcard
+                if index == len(parts) - 1:
+                    options.append(os.path.join(obfuscated_command, wildcard))
             else:
                 break
 
@@ -40,6 +44,10 @@ def main():
 
     print("\nFinal Obfuscated Path:")
     print(obfuscated_command)
+
+    print("\nOther options:")
+    for index, option in enumerate(options, 1):
+        print(f"{index}. {option}")
 
 if __name__ == "__main__":
     main()
